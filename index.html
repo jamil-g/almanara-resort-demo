@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Al Manara 3D Resort Experience</title>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.5.1/mapbox-gl.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="map"></div>
+
+  <header class="topbar glass">
+    <div>
+      <div class="eyebrow">Interactive 3D Resort Experience</div>
+      <h1>Al Manara, Saraya Aqaba</h1>
+    </div>
+    <div class="topbar-logo">
+      <img src="data/manara_logo.jpg" alt="Al Manara Logo">
+    </div>
+    <div class="top-actions">
+      <button id="homeBtn">Home</button>
+      <button id="cityBtn">Explore Aqaba</button>
+      <button id="pitchBtn">3D / 2D</button>
+      <button id="styleBtn">Light Map</button>
+    </div>
+  </header>
+
+  <aside class="panel glass">
+    <section>
+      <div class="section-title">Live Red Sea Conditions</div>
+      <div id="weatherGrid" class="weather-grid loading">Loading weather…</div>
+    </section>
+
+    <section>
+      <div class="section-title">Sun & Guest View</div>
+      <div class="slider-row">
+        <span>Sun time</span>
+        <input id="sunSlider" type="range" min="0" max="23" step="1" value="12" />
+        <strong id="sunHour">12:00</strong>
+      </div>
+      <button id="sunsetBtn" class="wide">Golden Hour View</button>
+      <button id="walkBtn" class="wide secondary">Arrival Fly-through</button>
+    </section>
+
+    <section>
+      <div class="section-title">Layers</div>
+      <label><input id="poiToggle" type="checkbox" checked> Resort points</label>
+      <label><input id="boundaryToggle" type="checkbox" checked> Resort focus area</label>
+      <label><input id="buildingToggle" type="checkbox" checked> Buildings</label>
+      <label><input id="city3dToggle" type="checkbox"> City 3D buildings</label>
+      <label><input id="photoToggle" type="checkbox" checked> Photo popups</label>
+      <label><input id="labelsToggle" type="checkbox" checked> City labels</label>
+    </section>
+
+    <section>
+      <div class="section-title">Legend</div>
+      <div class="legend-rows">
+        <span class="ls" style="background:#e7bd73"></span><span>Hotel</span>
+        <span class="ls" style="background:#e05c5c"></span><span>Restaurant</span>
+        <span class="ls" style="background:#4ade80"></span><span>Spa</span>
+        <span class="ls" style="background:#38bdf8"></span><span>Pool</span>
+        <span class="ls" style="background:#c084fc"></span><span>Villa</span>
+        <span class="ls" style="background:#f4a261"></span><span>Bar</span>
+        <span class="ls" style="background:#94a3b8"></span><span>Passage</span>
+        <span class="ls" style="background:#fbbf24"></span><span>Beach</span>
+        <span class="ls" style="background:#22d3ee"></span><span>Lagoon</span>
+        <span class="ls" style="background:#f87171"></span><span>Security</span>
+        <span class="line"></span><span>Boundary</span>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">Demo Modules</div>
+      <div class="module-grid">
+        <button class="module" data-module="Events">Events</button>
+        <button class="module" data-module="Dining">Dining</button>
+        <button class="module" data-module="Activities">Activities</button>
+        <button class="module" data-module="Guest Navigation">Guest Nav</button>
+      </div>
+      <div id="moduleHint" class="teaser">Select a module to preview what can be added next.</div>
+    </section>
+
+    <section>
+      <div class="section-title">Next Upgrade</div>
+      <div class="teaser">Live resort events, dining schedule, beach activities, guest navigation and operational announcements can be connected later.</div>
+    </section>
+  </aside>
+
+<div class="signature glass">Created as a GIS showcase by Jamil Garzuzi</div>
+
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.5.1/mapbox-gl.js"></script>
+  <script src="https://unpkg.com/suncalc@1.9.0/suncalc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
