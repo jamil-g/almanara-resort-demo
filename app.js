@@ -41,6 +41,7 @@ let photoMode = true;
 let is3D = true;
 let mapStyle = 'light'; // 'standard' | 'satellite' | 'light'
 let cityBldgVisible = false;
+let firstLoad = true;
 
 map.on('style.load', async () => {
   try { map.setConfigProperty('basemap', 'lightPreset', 'dusk'); } catch {}
@@ -54,6 +55,18 @@ map.on('style.load', async () => {
   setCityBuildings(cityBldgVisible);
   await loadWeather();
   setSunByHour(12);
+
+  if (firstLoad) {
+    firstLoad = false;
+    map.jumpTo({ center: [HOTEL.lng, HOTEL.lat], zoom: 13.5, pitch: 28, bearing: 0 });
+    setTimeout(() => {
+      map.flyTo({ center: [HOTEL.lng, HOTEL.lat], zoom: HOTEL.zoom, pitch: HOTEL.pitch, bearing: HOTEL.bearing, duration: 3600, essential: true, curve: 1.4 });
+    }, 400);
+    setTimeout(() => {
+      const ov = document.getElementById('intro-overlay');
+      if (ov) { ov.classList.add('hidden'); setTimeout(() => ov.remove(), 1100); }
+    }, 3000);
+  }
 });
 
 function addTerrain() {
@@ -228,11 +241,40 @@ async function addResortLayers() {
 
   const BLDG_TYPE_NAME = { 0: 'Hotel', 1: 'Bar / Cantina', 2: 'Restaurant', 3: 'Passage', 4: 'Villa', 5: 'Pool', 6: 'Spa' };
 
+  const HOTEL_BOOKING = 'https://www.marriott.com/en-us/hotels/aqjlc-al-manara-a-luxury-collection-hotel-saraya-aqaba/overview/';
+  const HOTEL_IMG = 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&auto=format&fit=crop&q=80';
+
   map.on('click', 'resort-buildings-extrusion', (e) => {
     if (!e.features.length) return;
     const f = e.features[0];
     const p = f.properties;
-    const link = p.page_url || 'https://www.marriott.com/en-us/hotels/aqjlc-al-manara-a-luxury-collection-hotel-saraya-aqaba/overview/';
+    const link = p.page_url || HOTEL_BOOKING;
+
+    if (p.type === 0) {
+      const html = `
+        <div class="popup-card">
+          <img src="${HOTEL_IMG}" alt="${escapeHtml(p.name)}">
+          <div class="popup-body">
+            <div class="popup-stars">★★★★★</div>
+            <h3>${escapeHtml(p.name || 'Al Manara Hotel')}</h3>
+            <p class="popup-tagline">Luxury Collection · Saraya Aqaba</p>
+            <div class="popup-tags">
+              <span>Couples</span><span>Family</span><span>Business</span>
+            </div>
+            <div class="popup-info">
+              <span>🏖 Steps from Red Sea beach</span>
+              <span>⛵ Saraya Marina nearby</span>
+            </div>
+            <div class="popup-links">
+              <a href="${HOTEL_BOOKING}" target="_blank" class="btn-book">Book Now</a>
+              <a href="${link}" target="_blank">Website</a>
+            </div>
+          </div>
+        </div>`;
+      new mapboxgl.Popup({ offset: 12, maxWidth: '300px' }).setLngLat(e.lngLat).setHTML(html).addTo(map);
+      return;
+    }
+
     const hours = (p.openhour && p.openhour !== '00:00:00') ? `<p style="color:var(--muted);margin:0 0 10px">${escapeHtml(p.openhour)} – ${escapeHtml(p.closehour)}</p>` : '';
     const html = `
       <div class="popup-card">
