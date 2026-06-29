@@ -99,6 +99,7 @@ label { display: block; margin: 11px 0; color: var(--muted); font-size: 13px; }
   h1 { font-size: 15px; font-weight: 700; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .top-actions { gap: 5px; flex-wrap: nowrap; justify-content: flex-end; flex-shrink: 0; }
   .top-actions button { padding: 7px 10px; font-size: 12px; }
+  #homeBtn, #cityBtn { display: none; }
 
   .panel {
     top: auto;
