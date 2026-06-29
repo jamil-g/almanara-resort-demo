@@ -65,8 +65,27 @@ map.on('style.load', async () => {
     setTimeout(() => {
       const ov = document.getElementById('intro-overlay');
       if (ov) { ov.classList.add('hidden'); setTimeout(() => ov.remove(), 1100); }
+      if (window.innerWidth <= 760) collapsePanel(true);
     }, 3000);
   }
+});
+
+// ── Mobile panel toggle ──────────────────────────────────────────────────────
+const panelEl = document.querySelector('.panel');
+const panelToggleBtn = document.getElementById('panel-toggle');
+
+function collapsePanel(collapsed) {
+  if (collapsed) {
+    panelEl.classList.add('collapsed');
+    panelToggleBtn.textContent = '≡ Info';
+  } else {
+    panelEl.classList.remove('collapsed');
+    panelToggleBtn.textContent = '✕ Close';
+  }
+}
+
+panelToggleBtn.addEventListener('click', () => {
+  collapsePanel(!panelEl.classList.contains('collapsed'));
 });
 
 function addTerrain() {
