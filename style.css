@@ -92,10 +92,13 @@ label { display: block; margin: 11px 0; color: var(--muted); font-size: 13px; }
 }
 
 @media (max-width: 760px) {
-  .topbar { flex-direction: column; align-items: flex-start; padding: 12px 14px; }
-  .top-actions { gap: 7px; }
-  .top-actions button { padding: 8px 11px; font-size: 13px; }
-  h1 { font-size: 22px; }
+  /* ── Compact single-row header ── */
+  .topbar { flex-direction: row; align-items: center; padding: 10px 12px; gap: 10px; top: 10px; left: 8px; right: 8px; border-radius: 16px; flex-wrap: nowrap; }
+  .topbar-logo { display: none; }
+  .eyebrow { display: none; }
+  h1 { font-size: 15px; font-weight: 700; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .top-actions { gap: 5px; flex-wrap: nowrap; justify-content: flex-end; flex-shrink: 0; }
+  .top-actions button { padding: 7px 10px; font-size: 12px; }
 
   .panel {
     top: auto;
